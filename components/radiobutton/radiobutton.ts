@@ -4,7 +4,8 @@ import {Component, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChange, Input
 
 @Component({
     selector: 'p-radio',
-    template: `
+    template: `<div></div>`
+  /*  template: `
         <div class="pui-radiobutton ui-widget">
             <div class="ui-helper-hidden-accessible">
                 <input #rb type="radio" name="{{name}}" value="{{value}}" [checked]="model == value"/>
@@ -14,7 +15,7 @@ import {Component, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChange, Input
                 <span class="pui-radiobutton-icon pui-icon" [ngClass]="{'fa fa-fw fa-circle':rb.checked}"></span>
             </div>
         </div>
-    `
+    `*/
 })
 export class RadioButton {
 
@@ -31,6 +32,17 @@ export class RadioButton {
     @Output() modelChange: EventEmitter<any> = new EventEmitter();
 
     hover: boolean;
+
+    constructor(private el: ElementRef) {
+        //this.initialized = false;
+    }
+
+    ngAfterViewInit() {
+     jQuery(this.el.nativeElement.children[0]).puiradiobutton({
+        change: function(event,checked) {
+          alert('change has happen: ' checked);
+      });
+    }
 
     onclick(input) {
         input.checked = true;
